@@ -4,17 +4,19 @@ import org.springframework.stereotype.Service;
 import ru.neoflex.accountservice.entity.BankAccount;
 import ru.neoflex.accountservice.model.BankAccountDTO;
 
+import java.util.UUID;
+
 @Service
 public class BankAccountMapper {
 
     public BankAccount toBankAccount(BankAccountDTO bankAccountDTO){
         BankAccount bankAccount = new BankAccount();
-        bankAccount.setUuid(bankAccountDTO.getUuid());
-        bankAccount.setAccountNumber(bankAccountDTO.getAccountNumber());
-        bankAccount.setFirstName(bankAccountDTO.getFirstName());
-        bankAccount.setMiddleName(bankAccountDTO.getMiddleName());
-        bankAccount.setLastName(bankAccountDTO.getLastName());
-        bankAccount.setSex(bankAccountDTO.getSex());
+        bankAccount.setUuid(UUID.randomUUID());
+        bankAccount.setAccountNumber(bankAccountDTO.getAccountNumber().get());
+        bankAccount.setFirstName(bankAccountDTO.getFirstName().get());
+        bankAccount.setMiddleName(bankAccountDTO.getMiddleName().get());
+        bankAccount.setLastName(bankAccountDTO.getLastName().get());
+        bankAccount.setSex(bankAccountDTO.getSex().get());
 
         return bankAccount;
     }

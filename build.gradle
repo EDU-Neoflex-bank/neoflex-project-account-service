@@ -20,8 +20,8 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.13.0'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
 
 }
 

@@ -1,39 +1,43 @@
-package ru.neoflex.accountservice.model;
+package ru.neoflex.accountservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.persistence.Enumerated;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
+import java.util.UUID;
 
-import static javax.persistence.EnumType.STRING;
+@Entity
+@Table(name = "account_address")
+public class Address {
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class AddressDTO {
+    @Id
+    @Column(name = "uuid")
+    private UUID uuid;
 
-    @JsonProperty(value = "city")
+    @Column(name = "bank_account_id")
     private String city;
 
-    @JsonProperty(value = "street_name")
+    @Column(name = "street_name")
     private String streetName;
 
-    @JsonProperty(value = "street_address")
+    @Column(name = "street_address")
     private String streetAddress;
 
-    @JsonProperty(value = "building_number")
+    @Column(name = "building_number")
     private String buildingNumber;
 
-    @JsonProperty(value = "zip_code")
+    @Column(name = "zip_code")
     private String zipCode;
 
-    @JsonProperty(value = "postcode")
+    @Column(name = "post_code")
     private String postCode;
 
-    @JsonProperty(value = "country")
-    @Enumerated(STRING)
+    @Column(name = "country")
     private String country;
 
-    public AddressDTO(String city, String streetName, String streetAddress, String buildingNumber, String zipCode, String postCode, String country) {
+    public Address(UUID uuid, String city, String streetName, String streetAddress, String buildingNumber, String zipCode, String postCode, String country) {
+        this.uuid = uuid;
         this.city = city;
         this.streetName = streetName;
         this.streetAddress = streetAddress;
@@ -43,7 +47,7 @@ public class AddressDTO {
         this.country = country;
     }
 
-    public AddressDTO() {
+    public Address() {
     }
 
     public String getCity() {
@@ -102,12 +106,20 @@ public class AddressDTO {
         this.country = country;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AddressDTO)) return false;
-        AddressDTO that = (AddressDTO) o;
-        return Objects.equals(getCity(), that.getCity()) && Objects.equals(getStreetName(), that.getStreetName()) && Objects.equals(getStreetAddress(), that.getStreetAddress()) && Objects.equals(getBuildingNumber(), that.getBuildingNumber()) && Objects.equals(getZipCode(), that.getZipCode()) && Objects.equals(getPostCode(), that.getPostCode()) && Objects.equals(getCountry(), that.getCountry());
+        if (!(o instanceof Address)) return false;
+        Address address = (Address) o;
+        return Objects.equals(getCity(), address.getCity()) && Objects.equals(getStreetName(), address.getStreetName()) && Objects.equals(getStreetAddress(), address.getStreetAddress()) && Objects.equals(getBuildingNumber(), address.getBuildingNumber()) && Objects.equals(getZipCode(), address.getZipCode()) && Objects.equals(getPostCode(), address.getPostCode()) && Objects.equals(getCountry(), address.getCountry());
     }
 
     @Override
@@ -117,13 +129,13 @@ public class AddressDTO {
 
     @Override
     public String toString() {
-        return "AddressDTO{" +
+        return "Address{" +
                 "city='" + city + '\'' +
                 ", streetName='" + streetName + '\'' +
                 ", streetAddress='" + streetAddress + '\'' +
                 ", buildingNumber='" + buildingNumber + '\'' +
                 ", zipCode='" + zipCode + '\'' +
-                ", postCode='" + postCode + '\'' +
+                ", postcode='" + postCode + '\'' +
                 ", country='" + country + '\'' +
                 '}';
     }

@@ -1,10 +1,13 @@
 package ru.neoflex.accountservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ru.neoflex.accountservice.model.enums.AccountType;
 
 import java.util.Objects;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BankAccountInfoDTO {
+
     private BankAccountDTO bankAccountDTO;
     private AddressDTO addressDTO;
     private AccountType accountType;

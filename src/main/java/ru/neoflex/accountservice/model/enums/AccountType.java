@@ -1,5 +1,10 @@
 package ru.neoflex.accountservice.model.enums;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public enum AccountType {
     CHECKING("Checking Account", "A checking account offers easy access to your money for your daily transactional needs and helps keep your cash secure. Customers can typically use a debit card or checks to make purchases or pay bills. Accounts may have different options to help avoid the monthly service fee. To determine the most economical choice, compare the benefits of different checking accounts with the services you actually need."),
     SAVINGS("Savings Account", "A savings account allows you to accumulate interest on funds you’ve saved for future needs. Interest rates can be compounded on a daily, weekly, monthly, or annual basis. Savings accounts vary by monthly service fees, interest rates, method used to calculate interest, and minimum opening deposit. Understanding the account’s terms and benefits will allow for a more informed decision on the account best suited for your needs."),
@@ -9,6 +14,10 @@ public enum AccountType {
 
     private final String title;
     private final String description;
+
+    private static final List<AccountType> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
 
     AccountType(String title, String description) {
         this.title = title;
@@ -24,7 +33,6 @@ public enum AccountType {
     }
 
     public AccountType getRandomAccountType() {
-//        TODO: generate randomly
-        return AccountType.CD;
+        return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }

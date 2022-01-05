@@ -1,159 +1,105 @@
 package ru.neoflex.accountservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.neoflex.accountservice.model.enums.Sex;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.Objects;
-import java.util.UUID;
+import java.util.Optional;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BankAccountDTO {
 
-    private final UUID uuid;
+    @JsonProperty("firstName")
     private String firstName;
+
+    @JsonProperty("middleName")
     private String middleName;
+
+    @JsonProperty("lastName")
     private String lastName;
+
+    @JsonProperty("accountNumber")
     private long accountNumber;
+
+    @JsonProperty("sex")
+    @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    /**
-     * BankAccount constructor
-     * @param firstName
-     * @param middleName
-     * @param lastName
-     * @param accountNumber
-     */
     public BankAccountDTO(String firstName, String middleName, String lastName, long accountNumber, Sex sex) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.accountNumber = accountNumber;
         this.sex = sex;
-        uuid = UUID.randomUUID();
     }
 
-    /**
-     *
-     * @return client's bank account uuid
-     */
-    public UUID getUuid() {
-        return uuid;
+    public BankAccountDTO() {
     }
 
-    /**
-     *
-     * @return client's firstname
-     */
-    public String getFirstName() {
-        return firstName;
+    public Optional<String> getFirstName() {
+        return Optional.ofNullable(firstName);
     }
 
-    /**
-     *
-     * @param firstName
-     */
+    public Optional<String> getMiddleName() {
+        return Optional.ofNullable(middleName);
+    }
+
+    public Optional<String> getLastName() {
+        return Optional.ofNullable(lastName);
+    }
+
+    public Optional<Long> getAccountNumber() {
+        return Optional.ofNullable(accountNumber);
+    }
+
+    public Optional<Sex> getSex() {
+        return Optional.ofNullable(sex);
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    /**
-     *
-     * @return client's middlename
-     */
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    /**
-     *
-     * @param middleName
-     */
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
 
-    /**
-     *
-     * @return client's lastname
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     *
-     * @param lastName
-     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    /**
-     *
-     * @return client's fullname
-     */
-    public String getFullName() {
-        return firstName + " " + middleName + " " + lastName;
-    }
-
-    /**
-     *
-     * @return client's account number
-     */
-    public long getAccountNumber() {
-        return accountNumber;
-    }
-
-    /**
-     *
-     * @param accountNumber
-     */
     public void setAccountNumber(long accountNumber) {
         this.accountNumber = accountNumber;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Sex getSex() {
-        return sex;
-    }
-
-    /**
-     *
-     * @param sex
-     */
     public void setSex(Sex sex) {
         this.sex = sex;
     }
 
-    /**
-     *
-     * @param o
-     * @return true if objects are equal, and false if they don't.
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BankAccountDTO)) return false;
         BankAccountDTO that = (BankAccountDTO) o;
-        return getUuid() == that.getUuid() && getAccountNumber() == that.getAccountNumber() && getFirstName().equals(that.getFirstName()) && getMiddleName().equals(that.getMiddleName()) && getLastName().equals(that.getLastName());
+        return getAccountNumber() == that.getAccountNumber() && Objects.equals(getFirstName(), that.getFirstName()) && Objects.equals(getMiddleName(), that.getMiddleName()) && Objects.equals(getLastName(), that.getLastName()) && getSex() == that.getSex();
     }
 
-    /**
-     *
-     * @return BankAccount object hashcode.
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(getUuid(), getFirstName(), getMiddleName(), getLastName(), getAccountNumber()) * 31;
+        return Objects.hash(getFirstName(), getMiddleName(), getLastName(), getAccountNumber(), getSex());
     }
 
-    /**
-     *
-     * @return a string representation of the object.
-     */
     @Override
     public String toString() {
-        return firstName + " " + middleName + " " + lastName + "\nAccount number: " + accountNumber;
+        return "BankAccountDTO{" +
+                "firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", accountNumber=" + accountNumber +
+                ", sex=" + sex +
+                '}';
     }
 }

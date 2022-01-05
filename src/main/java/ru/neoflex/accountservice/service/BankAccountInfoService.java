@@ -1,90 +1,49 @@
 package ru.neoflex.accountservice.service;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import ru.neoflex.accountservice.entity.Address;
 import ru.neoflex.accountservice.entity.BankAccount;
-import ru.neoflex.accountservice.mapper.BankAccountMapper;
-import ru.neoflex.accountservice.model.enums.Sex;
-import ru.neoflex.accountservice.repository.BankAccountRepo;
+import ru.neoflex.accountservice.entity.BankAccountInfo;
+import ru.neoflex.accountservice.model.enums.AccountType;
+import ru.neoflex.accountservice.repository.BankAccountInfoRepo;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class BankAccountInfoService {
 
-    private final ObjectMapper objectMapper;
-    private final BankAccountRepo bankAccountRepo;
-    private final BankAccountMapper bankAccountMapper;
+    private final AddressService addressService;
+    private final BankAccountService bankAccountService;
+    private final BankAccountInfoRepo bankAccountInfoRepo;
+    private final AccountTypeService accountTypeService;
 
-    public BankAccountInfoService(ObjectMapper objectMapper, BankAccountRepo bankAccountRepo, BankAccountMapper bankAccountMapper) {
-        this.objectMapper = objectMapper;
-        this.bankAccountRepo = bankAccountRepo;
-        this.bankAccountMapper = bankAccountMapper;
+    public BankAccountInfoService(AddressService addressService, BankAccountService bankAccountService, BankAccountInfoRepo bankAccountInfoRepo, AccountTypeService accountTypeService) {
+        this.addressService = addressService;
+        this.bankAccountService = bankAccountService;
+        this.bankAccountInfoRepo = bankAccountInfoRepo;
+        this.accountTypeService = accountTypeService;
     }
 
-    @Scheduled(cron = "*/2 * * * * *")
+    @Scheduled(cron = "*/20 * * * * *")
     public void generateBankAccount() {
+        int count = 10;
+        List<Address> addressList = addressService.getAddresses(count);
+        List<BankAccount> bankAccountList = bankAccountService.getBankAccounts(count);
+        List<AccountType> accountTypeList = accountTypeService.getAccountTypes(count);
 
-//        System.out.println("test");
+        for (int i = 0; i < count; i++) {
+            BankAccountInfo bankAccountInfo = new BankAccountInfo();
+            bankAccountInfo.setUuid(UUID.randomUUID());
+            bankAccountInfo.setBankAccount(bankAccountList.get(i));
+            bankAccountInfo.setAddress(addressList.get(i));
+            bankAccountInfo.setAccountType(accountTypeList.get(i));
 
-//        bankAccountRepo.save(bankAccountMapper.toBankAccount());
-        bankAccountRepo.save(new BankAccount(UUID.randomUUID(), "Иван", "Иванович", "Иванов", 1239762374628734L, Sex.MALE));
-        bankAccountRepo.findAll().forEach(System.out::println);
-
-        System.out.println("------------------------------------------------");
-
-//        рест запрост
-//        передать строку в objectMapper
-//        преобразовать строку в список объектов
-
-
-        /*
-        Сделать запрос при помощи REST template
-        его надо будет заинжектить как и в генераторе (все инъекции делать через конструктор!!)
-
-        метод будет возвращать строку с JSON, которую надо распарсить с помощью Jackson.
-        После этого будет получен список аккаунтов, к ним добавить по одному типу и адресу
-        и через сеттеры добавить эту инфу в пустой объект в новый объект BankAccountInfo.
-
-        После этого записать в базу.
-         */
+            System.out.println(bankAccountInfo);
+//            TODO: Create and set up tables in DB
+//            bankAccountInfoRepo.save(bankAccountInfo);
+//            bankAccountInfoRepo.findAll().forEach(System.out::println);
+        }
     }
-
-    /*
-    В цикле для каждого BankAccountInfo добавить типа аккаунта
-     */
-
-//  Вызвать AddressService getAddress
-
-    /*
-    Метод сохранения в базу. Потом.
-     */
-
-
-//    Узнать по поводу домашек - кто должен проверять
-
-//    Прочитать про внедрение зависимостей, про шедулер и
-
-/*
-* 1. ОТправить запрос на генератор
-* 2. получить json
-* 3. Преобразовать строку в список объектов BankAccount -> передать его в метод createBankAccountsInfo(). Он вернет список BankAccountInfo
-* 4. ОТправить запрос на адрес генетор
-* 2. получить json
-* 3. Преобразовать строку в список объектов Address
-* 4. Создать BankAccountInfo
-*
-* */
-
-
-    /*
-    * createBankAccountsInfo()
-    *   */
 }
-
-
-/*
-
- */
