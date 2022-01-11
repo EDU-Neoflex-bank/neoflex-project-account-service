@@ -1,9 +1,6 @@
 package ru.neoflex.accountservice.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -13,9 +10,10 @@ public class Address {
 
     @Id
     @Column(name = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
-    @Column(name = "bank_account_id")
+    @Column(name = "city")
     private String city;
 
     @Column(name = "street_name")

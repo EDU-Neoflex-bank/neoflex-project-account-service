@@ -8,10 +8,11 @@ import java.util.UUID;
 import static javax.persistence.EnumType.STRING;
 
 @Entity
-@Table(name="account")
+@Table(name = "account")
 public class BankAccount {
     @Id
     @Column(name = "account_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
     @Column(name = "firstname")

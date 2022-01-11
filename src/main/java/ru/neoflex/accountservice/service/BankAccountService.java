@@ -24,7 +24,7 @@ public class BankAccountService {
     }
 
     public List<BankAccount> getBankAccounts(int count) {
-        String json = requestService.getJSON("http://localhost:8080/api/accounts/", count);
+        String json = requestService.getJSON("http://localhost:8080/api/accounts", count);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         List<BankAccountDTO> bankAccountDTOS = new ArrayList<>();

@@ -40,10 +40,10 @@ public class BankAccountInfoService {
             bankAccountInfo.setAddress(addressList.get(i));
             bankAccountInfo.setAccountType(accountTypeList.get(i));
 
-            System.out.println(bankAccountInfo);
+//            System.out.println(bankAccountInfo);
 //            TODO: Create and set up tables in DB
-//            bankAccountInfoRepo.save(bankAccountInfo);
-//            bankAccountInfoRepo.findAll().forEach(System.out::println);
+            bankAccountInfoRepo.save(bankAccountInfo);
+            bankAccountInfoRepo.findAll().forEach(System.out::println);
         }
     }
 }

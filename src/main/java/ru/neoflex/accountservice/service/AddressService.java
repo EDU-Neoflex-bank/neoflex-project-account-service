@@ -25,7 +25,7 @@ public class AddressService {
     }
 
     public List<Address> getAddresses(int count) {
-        String json = requestService.getJSON("http://localhost:8081/api/addresses/", count);
+        String json = requestService.getJSON("http://localhost:8081/api/addresses", count);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         List<AddressDTO> addressDTOS = new ArrayList<>();

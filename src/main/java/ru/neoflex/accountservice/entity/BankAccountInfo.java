@@ -12,18 +12,19 @@ import static javax.persistence.EnumType.STRING;
 @Table(name = "account_info")
 public class BankAccountInfo {
     @Id
-    @Column(name = "bank_account_id")
+    @Column(name = "account_info_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
     @OneToOne
-    @JoinColumn(name = "bank_account")
+    @JoinColumn(name = "account_id")
     private BankAccount bankAccount;
 
     @OneToOne
-    @JoinColumn(name = "bank_account_address")
+    @JoinColumn(name = "address_id")
     private Address address;
 
-    @JoinColumn(name = "bank_account_type")
+    @JoinColumn(name = "account_type")
     @Enumerated(STRING)
     private AccountType accountType;
 
@@ -34,7 +35,8 @@ public class BankAccountInfo {
         this.bankAccount = bankAccount;
     }
 
-    public BankAccountInfo() {}
+    public BankAccountInfo() {
+    }
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
