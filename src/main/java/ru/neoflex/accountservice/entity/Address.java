@@ -10,7 +10,6 @@ public class Address {
 
     @Id
     @Column(name = "uuid")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
     @Column(name = "city")
@@ -128,12 +127,13 @@ public class Address {
     @Override
     public String toString() {
         return "Address{" +
-                "city='" + city + '\'' +
+                "uuid=" + uuid +
+                ", city='" + city + '\'' +
                 ", streetName='" + streetName + '\'' +
                 ", streetAddress='" + streetAddress + '\'' +
                 ", buildingNumber='" + buildingNumber + '\'' +
                 ", zipCode='" + zipCode + '\'' +
-                ", postcode='" + postCode + '\'' +
+                ", postCode='" + postCode + '\'' +
                 ", country='" + country + '\'' +
                 '}';
     }

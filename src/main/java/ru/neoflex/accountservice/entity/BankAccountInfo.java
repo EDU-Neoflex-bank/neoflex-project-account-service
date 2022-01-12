@@ -3,6 +3,8 @@ package ru.neoflex.accountservice.entity;
 import ru.neoflex.accountservice.model.enums.AccountType;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -13,7 +15,6 @@ import static javax.persistence.EnumType.STRING;
 public class BankAccountInfo {
     @Id
     @Column(name = "account_info_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
     @OneToOne
@@ -28,14 +29,19 @@ public class BankAccountInfo {
     @Enumerated(STRING)
     private AccountType accountType;
 
+    @Column(name = "create_date")
+    private Date createDate;
+
     public BankAccountInfo(BankAccount bankAccount, Address address, AccountType accountType) {
         uuid = UUID.randomUUID();
         this.accountType = accountType;
         this.address = address;
         this.bankAccount = bankAccount;
+        createDate = new Date();
     }
 
     public BankAccountInfo() {
+        createDate = new Date();
     }
 
     public void setUuid(UUID uuid) {

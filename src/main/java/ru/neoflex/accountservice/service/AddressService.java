@@ -28,8 +28,8 @@ public class AddressService {
         String json = requestService.getJSON("http://localhost:8081/api/addresses", count);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        List<AddressDTO> addressDTOS = new ArrayList<>();
         List<Address> addresses = new ArrayList<>();
+        List<AddressDTO> addressDTOS = new ArrayList<>();
 
         try {
             addressDTOS = objectMapper.readValue(json, new TypeReference<List<AddressDTO>>() {});

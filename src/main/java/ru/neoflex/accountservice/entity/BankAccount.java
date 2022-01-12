@@ -12,7 +12,6 @@ import static javax.persistence.EnumType.STRING;
 public class BankAccount {
     @Id
     @Column(name = "account_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
     @Column(name = "firstname")
