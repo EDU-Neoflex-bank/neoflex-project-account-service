@@ -9,13 +9,15 @@ import ru.neoflex.accountservice.model.enums.AccountType;
 import ru.neoflex.accountservice.repository.AddressRepo;
 import ru.neoflex.accountservice.repository.BankAccountInfoRepo;
 import ru.neoflex.accountservice.repository.BankAccountRepo;
+import ru.neoflex.accountservice.utils.DateConverter;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Service
 public class BankAccountInfoService {
-
     private final AddressService addressService;
     private final BankAccountService bankAccountService;
     private final BankAccountInfoRepo bankAccountInfoRepo;
@@ -32,11 +34,11 @@ public class BankAccountInfoService {
         this.accountTypeService = accountTypeService;
     }
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "*/120 * * * * *")
     public void generateBankAccount() {
         int count = 10;
         List<Address> addressList = addressService.getAddresses(count);
-        List<BankAccount> bankAccountList = bankAccountService.getBankAccounts(count);
+        List<BankAccount> bankAccountList = bankAccountService.generateAccounts(count);
         List<AccountType> accountTypeList = accountTypeService.getAccountTypes(count);
 
         for (int i = 0; i < count; i++) {
@@ -48,11 +50,26 @@ public class BankAccountInfoService {
             addressRepo.save(addressList.get(i));
             bankAccountRepo.save(bankAccountList.get(i));
             bankAccountInfoRepo.save(bankAccountInfo);
-            System.out.println("saved");
+            System.out.println("BankAccountInfo was saved.");
         }
     }
 
     public BankAccountInfo getBankAccountInfoById(UUID uuid) {
         return bankAccountInfoRepo.getById(uuid);
+    }
+
+    public List<BankAccountInfo> getBankAccountInfos() {
+        return bankAccountInfoRepo.findAll();
+    }
+
+    public List<BankAccountInfo> getBankAccountByType(String type) {
+        type = type.toUpperCase(Locale.ROOT);
+        return bankAccountInfoRepo.getAccountsByType(type);
+    }
+
+    public List<BankAccountInfo> getByPeriod(String startDate, String endDate) {
+        Date startingDate = DateConverter.stringDayMonthYearToDate(startDate);
+        Date endingDate = DateConverter.stringDayMonthYearToDate(endDate);
+        return bankAccountInfoRepo.getByPeriod(startingDate, endingDate);
     }
 }

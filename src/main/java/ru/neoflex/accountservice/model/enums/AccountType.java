@@ -12,12 +12,12 @@ public enum AccountType {
     MONEYMARKET("Money Market Account", "Money market accounts are similar to savings accounts, but they require you to maintain a higher balance to avoid a monthly service fee. Where savings accounts usually have a fixed interest rate, these accounts have rates that vary regularly based on money markets. Money market accounts can have tiered interest rates, providing more favorable rates based on higher balances. Some money market accounts also allow you to write checks against your funds, but on a more limited basis."),
     IRA("Individual Retirement Account", "RAs, or Individual Retirement Accounts, allow you to save independently for your retirement. These plans are useful if your employer doesn’t offer a 401(k) or other qualified employer sponsored retirement plan (QRP), including 403(b) and governmental 457(b), or you want to save more than your employer-sponsored plan allows. These accounts come in two types: the Traditional IRA and Roth IRA.");
 
-    private final String title;
-    private final String description;
-
     private static final List<AccountType> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
+
+    private final String title;
+    private final String description;
 
     AccountType(String title, String description) {
         this.title = title;

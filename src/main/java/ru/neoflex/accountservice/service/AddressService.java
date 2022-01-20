@@ -32,7 +32,8 @@ public class AddressService {
         List<AddressDTO> addressDTOS = new ArrayList<>();
 
         try {
-            addressDTOS = objectMapper.readValue(json, new TypeReference<List<AddressDTO>>() {});
+            addressDTOS = objectMapper.readValue(json, new TypeReference<List<AddressDTO>>() {
+            });
         } catch (JsonMappingException e) {
             e.printStackTrace();
         } catch (JsonProcessingException e) {

@@ -39,9 +39,7 @@ public class BankAccount {
         this.sex = sex;
     }
 
-    public BankAccount() {
-
-    }
+    public BankAccount() {}
 
     @Override
     public String toString() {

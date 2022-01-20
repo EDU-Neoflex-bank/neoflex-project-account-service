@@ -13,7 +13,6 @@ public class BankAccountInfoDTO {
     private AccountType accountType;
 
     /**
-     *
      * @param bankAccountDTO
      * @param addressDTO
      */
@@ -24,7 +23,6 @@ public class BankAccountInfoDTO {
     }
 
     /**
-     *
      * @return
      */
     public BankAccountDTO getBankAccount() {
@@ -32,7 +30,6 @@ public class BankAccountInfoDTO {
     }
 
     /**
-     *
      * @param bankAccountDTO
      */
     public void setBankAccount(BankAccountDTO bankAccountDTO) {
@@ -40,7 +37,6 @@ public class BankAccountInfoDTO {
     }
 
     /**
-     *
      * @return
      */
     public AddressDTO getAddress() {
@@ -48,7 +44,6 @@ public class BankAccountInfoDTO {
     }
 
     /**
-     *
      * @param addressDTO
      */
     public void setAddress(AddressDTO addressDTO) {
@@ -56,7 +51,6 @@ public class BankAccountInfoDTO {
     }
 
     /**
-     *
      * @return
      */
     public AccountType getAccountType() {
@@ -64,7 +58,6 @@ public class BankAccountInfoDTO {
     }
 
     /**
-     *
      * @param accountType
      */
     public void setAccountType(AccountType accountType) {
@@ -72,7 +65,6 @@ public class BankAccountInfoDTO {
     }
 
     /**
-     *
      * @param o
      * @return
      */
@@ -85,7 +77,6 @@ public class BankAccountInfoDTO {
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -94,7 +85,6 @@ public class BankAccountInfoDTO {
     }
 
     /**
-     *
      * @return
      */
     @Override
