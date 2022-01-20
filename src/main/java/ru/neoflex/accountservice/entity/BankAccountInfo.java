@@ -1,5 +1,6 @@
 package ru.neoflex.accountservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ru.neoflex.accountservice.model.enums.AccountType;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "account_info")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BankAccountInfo {
     @Id
     @Column(name = "account_info_id")

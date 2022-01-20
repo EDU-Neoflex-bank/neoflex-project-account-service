@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.neoflex.accountservice.entity.BankAccountInfo;
+import ru.neoflex.accountservice.model.enums.AccountType;
 
 import javax.transaction.Transactional;
 import java.util.Date;
@@ -13,10 +14,10 @@ import java.util.UUID;
 @Transactional
 public interface BankAccountInfoRepo extends JpaRepository<BankAccountInfo, UUID> {
 
-    @Query( "select ba " +
+    @Query("select ba " +
             "from BankAccountInfo ba " +
             "where ba.accountType = ?1")
-    List<BankAccountInfo> getAccountsByType(String accountType);
+    List<BankAccountInfo> getAccountsByType(@Param("type") AccountType accountType);
 
     @Query("select bi " +
             "from BankAccountInfo bi " +

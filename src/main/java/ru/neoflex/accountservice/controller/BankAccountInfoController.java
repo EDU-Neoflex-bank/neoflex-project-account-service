@@ -1,5 +1,6 @@
 package ru.neoflex.accountservice.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.neoflex.accountservice.entity.BankAccountInfo;
 import ru.neoflex.accountservice.service.BankAccountInfoService;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,9 +34,9 @@ public class BankAccountInfoController {
                     name = "uuid",
                     type = "String",
                     value = "BankAccountInfo uuid",
-                    example = "eac750ff-5935-4f2a-9ee6-dcc941643e36",
                     required = true)
-                    UUID uuid) {
+                    UUID uuid
+    ) {
         return bankAccountInfoService.getBankAccountInfoById(uuid);
     }
 
@@ -57,20 +57,20 @@ public class BankAccountInfoController {
                     type = "String",
                     value = "BankAccountInfo types: 'SAVINGS', 'MONEYMARKET', 'CHECKING', 'IRA' or 'CD'",
                     required = true)
-                    String type) {
+                    String type
+    ) {
         return bankAccountInfoService.getBankAccountByType(type);
     }
 
 
     @GetMapping("/account-infos-by-period")
-    @ApiOperation(value = "Get BankAccountInfo by type")
+    @ApiOperation(value = "Get BankAccountInfo by period in dd-MM-yyyy format")
     public List<BankAccountInfo> getAccountsByPeriod(
             @RequestParam
             @ApiParam(
                     name = "startDate",
                     type = "String",
                     value = "BankAccountInfo start period date",
-                    example = "2000-12-31",
                     required = true)
                     String startDate,
             @RequestParam
@@ -78,7 +78,6 @@ public class BankAccountInfoController {
                     name = "endDate",
                     type = "String",
                     value = "BankAccountInfo end period date",
-                    example = "2000-12-31",
                     required = true)
                     String endDate
     ) {

@@ -63,8 +63,8 @@ public class BankAccountInfoService {
     }
 
     public List<BankAccountInfo> getBankAccountByType(String type) {
-        type = type.toUpperCase(Locale.ROOT);
-        return bankAccountInfoRepo.getAccountsByType(type);
+        AccountType accountType = AccountType.valueOf(type.toUpperCase(Locale.ROOT));
+        return bankAccountInfoRepo.getAccountsByType(accountType);
     }
 
     public List<BankAccountInfo> getByPeriod(String startDate, String endDate) {
