@@ -1,5 +1,6 @@
 package ru.neoflex.accountservice.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.neoflex.accountservice.entity.Address;
@@ -17,6 +18,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class BankAccountInfoService {
     private final AddressService addressService;
     private final BankAccountService bankAccountService;
@@ -50,26 +52,30 @@ public class BankAccountInfoService {
             addressRepo.save(addressList.get(i));
             bankAccountRepo.save(bankAccountList.get(i));
             bankAccountInfoRepo.save(bankAccountInfo);
-            System.out.println("BankAccountInfo was saved.");
+            log.info(String.format("BankAccountInfo with id %s was saved.", bankAccountInfo.getUuid().toString()));
         }
     }
 
     public BankAccountInfo getBankAccountInfoById(UUID uuid) {
+        log.info(String.format("BankAccountInfo with id %s was returned.", uuid.toString()));
         return bankAccountInfoRepo.getById(uuid);
     }
 
     public List<BankAccountInfo> getBankAccountInfos() {
+        log.info("BankAccountInfos list was returned.");
         return bankAccountInfoRepo.findAll();
     }
 
     public List<BankAccountInfo> getBankAccountByType(String type) {
         AccountType accountType = AccountType.valueOf(type.toUpperCase(Locale.ROOT));
+        log.info(String.format("BankAccountInfos with type of %s were returned."), accountType.getTitle());
         return bankAccountInfoRepo.getAccountsByType(accountType);
     }
 
     public List<BankAccountInfo> getByPeriod(String startDate, String endDate) {
         Date startingDate = DateConverter.stringDayMonthYearToDate(startDate);
         Date endingDate = DateConverter.stringDayMonthYearToDate(endDate);
+        log.info(String.format("BankAccountInfos created in period between %s and %s were returned."), startingDate, endingDate);
         return bankAccountInfoRepo.getByPeriod(startingDate, endingDate);
     }
 }

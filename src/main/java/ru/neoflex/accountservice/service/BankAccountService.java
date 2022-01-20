@@ -3,8 +3,8 @@ package ru.neoflex.accountservice.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.neoflex.accountservice.entity.BankAccount;
 import ru.neoflex.accountservice.mapper.BankAccountMapper;
@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class BankAccountService {
     private final RequestService requestService;
     private final BankAccountMapper bankAccountMapper;
@@ -48,10 +49,12 @@ public class BankAccountService {
     }
 
     public BankAccount getBankAccountById(UUID uuid) {
+        log.info(String.format("BankAccount with id %s was returned."), uuid);
         return bankAccountRepo.getById(uuid);
     }
 
     public List<BankAccount> getBankAccountsList() {
+        log.info("BankAccounts list was returned.");
         return bankAccountRepo.findAll();
     }
 }

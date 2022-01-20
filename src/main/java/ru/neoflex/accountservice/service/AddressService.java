@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.neoflex.accountservice.entity.Address;
 import ru.neoflex.accountservice.mapper.AddressMapper;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class AddressService {
 
     private final RequestService requestService;
@@ -44,6 +46,7 @@ public class AddressService {
             addresses.add(addressMapper.toAddress(addressDTO));
         }
 
+        log.info("Addresses list was returned successfully.");
         return addresses;
     }
 }
