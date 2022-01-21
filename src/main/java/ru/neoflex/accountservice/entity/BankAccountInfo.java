@@ -1,11 +1,15 @@
 package ru.neoflex.accountservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 import ru.neoflex.accountservice.model.enums.AccountType;
+import ru.neoflex.accountservice.utils.RandomDateGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,6 +18,9 @@ import static javax.persistence.EnumType.STRING;
 @Entity
 @Table(name = "account_info")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Setter
+@Getter
+@ToString
 public class BankAccountInfo {
     @Id
     @Column(name = "account_info_id")
@@ -39,87 +46,23 @@ public class BankAccountInfo {
         this.accountType = accountType;
         this.address = address;
         this.bankAccount = bankAccount;
-        createDate = getRandomDate();
+        createDate = RandomDateGenerator.getRandomDate();
     }
 
     public BankAccountInfo() {
-        createDate = getRandomDate();
-    }
-
-    public static Date getRandomDate() {
-        GregorianCalendar gc = new GregorianCalendar();
-        int startYear = 2000;
-        int endYear = 2022;
-
-        int year = startYear + (int) Math.round(Math.random() * (endYear - startYear));
-        int dayOfYear = 1 + (int) Math.round(Math.random() * (gc.getActualMaximum(gc.DAY_OF_YEAR) - 1));
-        gc.set(gc.YEAR, year);
-        gc.set(gc.DAY_OF_YEAR, dayOfYear);
-
-        return gc.getTime();
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public BankAccount getBankAccount() {
-        return bankAccount;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public AccountType getAccountType() {
-        return accountType;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+        createDate = RandomDateGenerator.getRandomDate();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BankAccountInfo)) return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         BankAccountInfo that = (BankAccountInfo) o;
-        return Objects.equals(getUuid(), that.getUuid()) && Objects.equals(getBankAccount(), that.getBankAccount()) && Objects.equals(getAddress(), that.getAddress()) && getAccountType() == that.getAccountType() && Objects.equals(getCreateDate(), that.getCreateDate());
+        return uuid != null && Objects.equals(uuid, that.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUuid(), getBankAccount(), getAddress(), getAccountType(), getCreateDate());
-    }
-
-    @Override
-    public String toString() {
-        return "BankAccountInfo{" +
-                "uuid=" + uuid +
-                ", bankAccount=" + bankAccount +
-                ", address=" + address +
-                ", accountType=" + accountType +
-                ", createDate=" + createDate +
-                '}';
+        return getClass().hashCode();
     }
 }

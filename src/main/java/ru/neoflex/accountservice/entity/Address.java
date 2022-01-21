@@ -1,14 +1,24 @@
 package ru.neoflex.accountservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "account_address")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Address {
 
     @Id
@@ -36,108 +46,16 @@ public class Address {
     @Column(name = "country")
     private String country;
 
-    public Address(UUID uuid, String city, String streetName, String streetAddress, String buildingNumber, String zipCode, String postCode, String country) {
-        this.uuid = uuid;
-        this.city = city;
-        this.streetName = streetName;
-        this.streetAddress = streetAddress;
-        this.buildingNumber = buildingNumber;
-        this.zipCode = zipCode;
-        this.postCode = postCode;
-        this.country = country;
-    }
-
-    public Address() {
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getStreetName() {
-        return streetName;
-    }
-
-    public String getStreetAddress() {
-        return streetAddress;
-    }
-
-    public String getBuildingNumber() {
-        return buildingNumber;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
-    public void setStreetAddress(String streetAddress) {
-        this.streetAddress = streetAddress;
-    }
-
-    public void setBuildingNumber(String buildingNumber) {
-        this.buildingNumber = buildingNumber;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Address)) return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Address address = (Address) o;
-        return Objects.equals(getCity(), address.getCity()) && Objects.equals(getStreetName(), address.getStreetName()) && Objects.equals(getStreetAddress(), address.getStreetAddress()) && Objects.equals(getBuildingNumber(), address.getBuildingNumber()) && Objects.equals(getZipCode(), address.getZipCode()) && Objects.equals(getPostCode(), address.getPostCode()) && Objects.equals(getCountry(), address.getCountry());
+        return uuid != null && Objects.equals(uuid, address.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCity(), getStreetName(), getStreetAddress(), getBuildingNumber(), getZipCode(), getPostCode(), getCountry());
-    }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "uuid=" + uuid +
-                ", city='" + city + '\'' +
-                ", streetName='" + streetName + '\'' +
-                ", streetAddress='" + streetAddress + '\'' +
-                ", buildingNumber='" + buildingNumber + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", postCode='" + postCode + '\'' +
-                ", country='" + country + '\'' +
-                '}';
+        return getClass().hashCode();
     }
 }

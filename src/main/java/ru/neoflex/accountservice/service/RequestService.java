@@ -34,6 +34,7 @@ public class RequestService {
 
             switch (status) {
                 case 200:
+                    log.info("STATUS: 200");
                 case 201:
                     BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
                     StringBuilder sb = new StringBuilder();
@@ -42,7 +43,7 @@ public class RequestService {
                         sb.append(line + "\n");
                     }
                     br.close();
-                    log.info("JSON was returned successfully.");
+                    log.info("JSON was returned successfully. STATUS: 201");
                     return sb.toString();
             }
 

@@ -25,7 +25,6 @@ public class BankAccountInfoController {
         this.bankAccountInfoService = bankAccountInfoService;
     }
 
-
     @GetMapping("/account-info")
     @ApiOperation(value = "Get BankAccountInfo by uuid", notes = "This method returns BankAccountInfo by uuid")
     public BankAccountInfo getAccountInfo(
@@ -40,13 +39,11 @@ public class BankAccountInfoController {
         return bankAccountInfoService.getBankAccountInfoById(uuid);
     }
 
-
     @GetMapping("/account-infos")
     @ApiOperation(value = "Get BankAccountInfo list")
     public List<BankAccountInfo> getAccountInfos() {
         return bankAccountInfoService.getBankAccountInfos();
     }
-
 
     @GetMapping("/account-infos-by-type")
     @ApiOperation(value = "Get BankAccountInfo by type")
@@ -61,7 +58,6 @@ public class BankAccountInfoController {
     ) {
         return bankAccountInfoService.getBankAccountByType(type);
     }
-
 
     @GetMapping("/account-infos-by-period")
     @ApiOperation(value = "Get BankAccountInfo by period in dd-MM-yyyy format")
