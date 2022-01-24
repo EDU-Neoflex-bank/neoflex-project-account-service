@@ -1,5 +1,6 @@
 package ru.neoflex.accountservice.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -12,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
+@Slf4j
 public class RequestService {
 
     public String getJSON(String address, int count) {
@@ -32,14 +34,16 @@ public class RequestService {
 
             switch (status) {
                 case 200:
+                    log.info("STATUS: 200");
                 case 201:
                     BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
                     StringBuilder sb = new StringBuilder();
                     String line;
                     while ((line = br.readLine()) != null) {
-                        sb.append(line+"\n");
+                        sb.append(line + "\n");
                     }
                     br.close();
+                    log.info("JSON was returned successfully. STATUS: 201");
                     return sb.toString();
             }
 
@@ -56,6 +60,7 @@ public class RequestService {
                 }
             }
         }
+        log.info("JSON wasn't returned successfully.");
         return null;
     }
 }

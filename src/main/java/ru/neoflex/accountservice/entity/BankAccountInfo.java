@@ -1,9 +1,14 @@
 package ru.neoflex.accountservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 import ru.neoflex.accountservice.model.enums.AccountType;
+import ru.neoflex.accountservice.utils.RandomDateGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -12,6 +17,10 @@ import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "account_info")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Setter
+@Getter
+@ToString
 public class BankAccountInfo {
     @Id
     @Column(name = "account_info_id")
@@ -37,65 +46,23 @@ public class BankAccountInfo {
         this.accountType = accountType;
         this.address = address;
         this.bankAccount = bankAccount;
-        createDate = new Date();
+        createDate = RandomDateGenerator.getRandomDate();
     }
 
     public BankAccountInfo() {
-        createDate = new Date();
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public BankAccount getBankAccount() {
-        return bankAccount;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public AccountType getAccountType() {
-        return accountType;
+        createDate = RandomDateGenerator.getRandomDate();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BankAccountInfo)) return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         BankAccountInfo that = (BankAccountInfo) o;
-        return Objects.equals(getUuid(), that.getUuid()) && Objects.equals(getBankAccount(), that.getBankAccount()) && Objects.equals(getAddress(), that.getAddress()) && getAccountType() == that.getAccountType();
+        return uuid != null && Objects.equals(uuid, that.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUuid(), getBankAccount(), getAddress(), getAccountType());
-    }
-
-    @Override
-    public String toString() {
-        return "BankAccountInfo{" +
-                "uuid=" + uuid +
-                ", bankAccount=" + bankAccount +
-                ", address=" + address +
-                ", accountType=" + accountType +
-                '}';
+        return getClass().hashCode();
     }
 }

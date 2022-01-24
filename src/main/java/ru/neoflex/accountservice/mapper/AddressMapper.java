@@ -9,7 +9,7 @@ import java.util.UUID;
 @Service
 public class AddressMapper {
 
-    public Address toAddress(AddressDTO addressDTO){
+    public Address toAddress(AddressDTO addressDTO) {
         Address address = new Address();
         address.setUuid(UUID.randomUUID());
         address.setCity(addressDTO.getCity());

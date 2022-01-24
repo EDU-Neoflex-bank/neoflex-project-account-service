@@ -2,6 +2,10 @@ package ru.neoflex.accountservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import ru.neoflex.accountservice.model.enums.Sex;
 
 import javax.persistence.EnumType;
@@ -10,6 +14,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
 public class BankAccountDTO {
 
     @JsonProperty("firstName")
@@ -27,17 +35,6 @@ public class BankAccountDTO {
     @JsonProperty("sex")
     @Enumerated(EnumType.STRING)
     private Sex sex;
-
-    public BankAccountDTO(String firstName, String middleName, String lastName, long accountNumber, Sex sex) {
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.accountNumber = accountNumber;
-        this.sex = sex;
-    }
-
-    public BankAccountDTO() {
-    }
 
     public Optional<String> getFirstName() {
         return Optional.ofNullable(firstName);
@@ -59,26 +56,6 @@ public class BankAccountDTO {
         return Optional.ofNullable(sex);
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setAccountNumber(long accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public void setSex(Sex sex) {
-        this.sex = sex;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,16 +67,5 @@ public class BankAccountDTO {
     @Override
     public int hashCode() {
         return Objects.hash(getFirstName(), getMiddleName(), getLastName(), getAccountNumber(), getSex());
-    }
-
-    @Override
-    public String toString() {
-        return "BankAccountDTO{" +
-                "firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", accountNumber=" + accountNumber +
-                ", sex=" + sex +
-                '}';
     }
 }

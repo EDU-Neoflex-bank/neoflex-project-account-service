@@ -9,7 +9,7 @@ import java.util.UUID;
 @Service
 public class BankAccountMapper {
 
-    public BankAccount toBankAccount(BankAccountDTO bankAccountDTO){
+    public BankAccount toBankAccount(BankAccountDTO bankAccountDTO) {
         BankAccount bankAccount = new BankAccount();
         bankAccount.setUuid(UUID.randomUUID());
         bankAccount.setAccountNumber(bankAccountDTO.getAccountNumber().get());
