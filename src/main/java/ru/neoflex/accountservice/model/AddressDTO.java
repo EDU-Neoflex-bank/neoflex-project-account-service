@@ -2,19 +2,16 @@ package ru.neoflex.accountservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Enumerated;
-import java.util.Objects;
 
 import static javax.persistence.EnumType.STRING;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Setter
-@Getter
-@ToString
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class AddressDTO {
 
     @JsonProperty(value = "city")
@@ -38,17 +35,4 @@ public class AddressDTO {
     @JsonProperty(value = "country")
     @Enumerated(STRING)
     private String country;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AddressDTO)) return false;
-        AddressDTO that = (AddressDTO) o;
-        return Objects.equals(getCity(), that.getCity()) && Objects.equals(getStreetName(), that.getStreetName()) && Objects.equals(getStreetAddress(), that.getStreetAddress()) && Objects.equals(getBuildingNumber(), that.getBuildingNumber()) && Objects.equals(getZipCode(), that.getZipCode()) && Objects.equals(getPostCode(), that.getPostCode()) && Objects.equals(getCountry(), that.getCountry());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getCity(), getStreetName(), getStreetAddress(), getBuildingNumber(), getZipCode(), getPostCode(), getCountry());
-    }
 }

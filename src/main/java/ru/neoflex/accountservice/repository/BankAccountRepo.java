@@ -7,6 +7,4 @@ import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Transactional
-public interface BankAccountRepo extends JpaRepository<BankAccount, UUID> {
-
-}
+public interface BankAccountRepo extends JpaRepository<BankAccount, UUID> {}

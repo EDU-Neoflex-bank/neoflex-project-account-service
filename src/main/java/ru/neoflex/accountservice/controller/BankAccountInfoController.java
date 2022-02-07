@@ -1,9 +1,9 @@
 package ru.neoflex.accountservice.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,16 +17,14 @@ import java.util.UUID;
 @Api(tags = {"Getting BankAccountInfo"})
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class BankAccountInfoController {
 
     private final BankAccountInfoService bankAccountInfoService;
 
-    public BankAccountInfoController(BankAccountInfoService bankAccountInfoService) {
-        this.bankAccountInfoService = bankAccountInfoService;
-    }
-
     @GetMapping("/account-info")
     @ApiOperation(value = "Get BankAccountInfo by uuid", notes = "This method returns BankAccountInfo by uuid")
+//    TODO исправить все методы на BankAccountInfoDTO?????!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public BankAccountInfo getAccountInfo(
             @RequestParam("uuid")
             @ApiParam(

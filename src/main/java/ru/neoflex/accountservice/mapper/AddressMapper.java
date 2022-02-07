@@ -10,16 +10,15 @@ import java.util.UUID;
 public class AddressMapper {
 
     public Address toAddress(AddressDTO addressDTO) {
-        Address address = new Address();
-        address.setUuid(UUID.randomUUID());
-        address.setCity(addressDTO.getCity());
-        address.setStreetName(addressDTO.getStreetName());
-        address.setStreetAddress(addressDTO.getStreetAddress());
-        address.setBuildingNumber(addressDTO.getBuildingNumber());
-        address.setZipCode(addressDTO.getZipCode());
-        address.setPostCode(addressDTO.getPostCode());
-        address.setCountry(addressDTO.getCountry());
-
-        return address;
+        return Address.builder()
+                .uuid(UUID.randomUUID())
+                .city(addressDTO.getCity())
+                .streetName(addressDTO.getStreetName())
+                .streetAddress(addressDTO.getStreetAddress())
+                .buildingNumber(addressDTO.getBuildingNumber())
+                .zipCode(addressDTO.getZipCode())
+                .postCode(addressDTO.getPostCode())
+                .country(addressDTO.getCountry())
+                .build();
     }
 }

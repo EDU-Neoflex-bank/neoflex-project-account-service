@@ -1,9 +1,7 @@
 package ru.neoflex.accountservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.Hibernate;
 import ru.neoflex.accountservice.model.enums.AccountType;
 import ru.neoflex.accountservice.utils.RandomDateGenerator;
@@ -17,10 +15,10 @@ import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "account_info")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
-@ToString
+@Setter
+@EqualsAndHashCode
 public class BankAccountInfo {
     @Id
     @Column(name = "account_info_id")
@@ -42,27 +40,14 @@ public class BankAccountInfo {
     private Date createDate;
 
     public BankAccountInfo(BankAccount bankAccount, Address address, AccountType accountType) {
-        uuid = UUID.randomUUID();
+        this.uuid = UUID.randomUUID();
         this.accountType = accountType;
         this.address = address;
         this.bankAccount = bankAccount;
-        createDate = RandomDateGenerator.getRandomDate();
+        this.createDate = RandomDateGenerator.getRandomDate();
     }
 
     public BankAccountInfo() {
         createDate = RandomDateGenerator.getRandomDate();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        BankAccountInfo that = (BankAccountInfo) o;
-        return uuid != null && Objects.equals(uuid, that.uuid);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 }

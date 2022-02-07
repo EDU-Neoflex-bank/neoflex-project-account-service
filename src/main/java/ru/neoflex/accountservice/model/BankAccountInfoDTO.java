@@ -1,18 +1,18 @@
 package ru.neoflex.accountservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.neoflex.accountservice.model.enums.AccountType;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-@ToString
-@Setter
-@Getter
-@EqualsAndHashCode
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class BankAccountInfoDTO {
+
     private BankAccountDTO bankAccountDTO;
+
     private AddressDTO addressDTO;
+
     private AccountType accountType;
 }

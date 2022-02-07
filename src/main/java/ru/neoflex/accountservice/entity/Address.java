@@ -1,24 +1,24 @@
 package ru.neoflex.accountservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "account_address")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Getter
-@Setter
-@ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Address {
 
     @Id
@@ -45,17 +45,4 @@ public class Address {
 
     @Column(name = "country")
     private String country;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Address address = (Address) o;
-        return uuid != null && Objects.equals(uuid, address.uuid);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
