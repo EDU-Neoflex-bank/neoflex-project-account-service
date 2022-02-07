@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import ru.neoflex.accountservice.entity.Address;
 import ru.neoflex.accountservice.entity.BankAccount;
 import ru.neoflex.accountservice.entity.BankAccountInfo;
+import ru.neoflex.accountservice.mapper.BankAccountInfoMapper;
+import ru.neoflex.accountservice.model.BankAccountInfoDTO;
 import ru.neoflex.accountservice.model.enums.AccountType;
 import ru.neoflex.accountservice.repository.AddressRepo;
 import ru.neoflex.accountservice.repository.BankAccountInfoRepo;
@@ -17,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -55,26 +58,35 @@ public class BankAccountInfoService {
         }
     }
 
-    public BankAccountInfo getBankAccountInfoById(UUID uuid) {
+    public BankAccountInfoDTO getBankAccountInfoById(UUID uuid) {
         log.info("BankAccountInfo with id {} was returned.", uuid.toString());
-        return bankAccountInfoRepo.getById(uuid);
+        return BankAccountInfoMapper.toBankAccountInfoDTO(bankAccountInfoRepo.getById(uuid));
     }
 
-    public List<BankAccountInfo> getBankAccountInfos() {
+    public List<BankAccountInfoDTO> getBankAccountInfos() {
         log.info("BankAccountInfos list was returned.");
-        return bankAccountInfoRepo.findAll();
+        return bankAccountInfoRepo.findAll()
+                .stream()
+                .map(BankAccountInfoMapper::toBankAccountInfoDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<BankAccountInfo> getBankAccountByType(String type) {
+    public List<BankAccountInfoDTO> getBankAccountByType(String type) {
         AccountType accountType = AccountType.valueOf(type.toUpperCase(Locale.ROOT));
         log.info("BankAccountInfos with type of {} were returned.", accountType.getTitle());
-        return bankAccountInfoRepo.getAccountsByType(accountType);
+        return bankAccountInfoRepo.getAccountsByType(accountType)
+                .stream()
+                .map(BankAccountInfoMapper::toBankAccountInfoDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<BankAccountInfo> getByPeriod(String startDate, String endDate) {
+    public List<BankAccountInfoDTO> getByPeriod(String startDate, String endDate) {
         Date startingDate = DateConverter.stringDayMonthYearToDate(startDate);
         Date endingDate = DateConverter.stringDayMonthYearToDate(endDate);
         log.info("BankAccountInfos created in period between {} and {} were returned.", startingDate, endingDate);
-        return bankAccountInfoRepo.getByPeriod(startingDate, endingDate);
+        return bankAccountInfoRepo.getByPeriod(startingDate, endingDate)
+                .stream()
+                .map(BankAccountInfoMapper::toBankAccountInfoDTO)
+                .collect(Collectors.toList());
     }
 }

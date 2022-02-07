@@ -1,18 +1,22 @@
 package ru.neoflex.accountservice.model;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import ru.neoflex.accountservice.entity.Address;
+import ru.neoflex.accountservice.entity.BankAccount;
 import ru.neoflex.accountservice.model.enums.AccountType;
 
+import java.util.Date;
+
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 public class BankAccountInfoDTO {
 
-    private BankAccountDTO bankAccountDTO;
+    private BankAccount bankAccount;
 
-    private AddressDTO addressDTO;
+    private Address address;
 
     private AccountType accountType;
+
+    private Date createDate;
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.neoflex.accountservice.entity.BankAccountInfo;
+import ru.neoflex.accountservice.model.BankAccountInfoDTO;
 import ru.neoflex.accountservice.service.BankAccountInfoService;
 
 import java.util.List;
@@ -18,14 +18,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
-public class BankAccountInfoController {
+public class BankAccountInfoDTOController {
 
     private final BankAccountInfoService bankAccountInfoService;
 
     @GetMapping("/account-info")
     @ApiOperation(value = "Get BankAccountInfo by uuid", notes = "This method returns BankAccountInfo by uuid")
-//    TODO исправить все методы на BankAccountInfoDTO?????!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    public BankAccountInfo getAccountInfo(
+    public BankAccountInfoDTO getAccountInfo(
             @RequestParam("uuid")
             @ApiParam(
                     name = "uuid",
@@ -39,13 +38,13 @@ public class BankAccountInfoController {
 
     @GetMapping("/account-infos")
     @ApiOperation(value = "Get BankAccountInfo list")
-    public List<BankAccountInfo> getAccountInfos() {
+    public List<BankAccountInfoDTO> getAccountInfos() {
         return bankAccountInfoService.getBankAccountInfos();
     }
 
     @GetMapping("/account-infos-by-type")
     @ApiOperation(value = "Get BankAccountInfo by type")
-    public List<BankAccountInfo> getAccountByType(
+    public List<BankAccountInfoDTO> getAccountByType(
             @RequestParam("type")
             @ApiParam(
                     name = "type",
@@ -59,7 +58,7 @@ public class BankAccountInfoController {
 
     @GetMapping("/account-infos-by-period")
     @ApiOperation(value = "Get BankAccountInfo by period in dd-MM-yyyy format")
-    public List<BankAccountInfo> getAccountsByPeriod(
+    public List<BankAccountInfoDTO> getAccountsByPeriod(
             @RequestParam
             @ApiParam(
                     name = "startDate",
