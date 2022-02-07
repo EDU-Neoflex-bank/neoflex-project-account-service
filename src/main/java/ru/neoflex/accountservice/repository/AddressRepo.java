@@ -8,5 +8,4 @@ import java.util.UUID;
 
 @Transactional
 public interface AddressRepo extends JpaRepository<Address, UUID> {
-
 }

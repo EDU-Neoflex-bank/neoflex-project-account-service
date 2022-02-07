@@ -1,18 +1,22 @@
 package ru.neoflex.accountservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import ru.neoflex.accountservice.entity.Address;
+import ru.neoflex.accountservice.entity.BankAccount;
 import ru.neoflex.accountservice.model.enums.AccountType;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-@ToString
-@Setter
-@Getter
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
+import java.util.Date;
+
+@Data
+@Builder
 public class BankAccountInfoDTO {
-    private BankAccountDTO bankAccountDTO;
-    private AddressDTO addressDTO;
+
+    private BankAccount bankAccount;
+
+    private Address address;
+
     private AccountType accountType;
+
+    private Date createDate;
 }

@@ -1,11 +1,14 @@
 package ru.neoflex.accountservice.service;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.neoflex.accountservice.entity.Address;
 import ru.neoflex.accountservice.entity.BankAccount;
 import ru.neoflex.accountservice.entity.BankAccountInfo;
+import ru.neoflex.accountservice.mapper.BankAccountInfoMapper;
+import ru.neoflex.accountservice.model.BankAccountInfoDTO;
 import ru.neoflex.accountservice.model.enums.AccountType;
 import ru.neoflex.accountservice.repository.AddressRepo;
 import ru.neoflex.accountservice.repository.BankAccountInfoRepo;
@@ -16,27 +19,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class BankAccountInfoService {
+
     private final AddressService addressService;
+
     private final BankAccountService bankAccountService;
+
     private final BankAccountInfoRepo bankAccountInfoRepo;
+
     private final BankAccountRepo bankAccountRepo;
+
     private final AddressRepo addressRepo;
+
     private final AccountTypeService accountTypeService;
 
-    public BankAccountInfoService(AddressService addressService, BankAccountService bankAccountService, BankAccountInfoRepo bankAccountInfoRepo, BankAccountRepo bankAccountRepo, AddressRepo addressRepo, AccountTypeService accountTypeService) {
-        this.addressService = addressService;
-        this.bankAccountService = bankAccountService;
-        this.bankAccountInfoRepo = bankAccountInfoRepo;
-        this.bankAccountRepo = bankAccountRepo;
-        this.addressRepo = addressRepo;
-        this.accountTypeService = accountTypeService;
-    }
-
-    @Scheduled(cron = "*/120 * * * * *")
+    @Scheduled(cron = "${getting-accounts-crone-timer}")
     public void generateBankAccount() {
         int count = 10;
         List<Address> addressList = addressService.getAddresses(count);
@@ -52,30 +54,39 @@ public class BankAccountInfoService {
             addressRepo.save(addressList.get(i));
             bankAccountRepo.save(bankAccountList.get(i));
             bankAccountInfoRepo.save(bankAccountInfo);
-            log.info(String.format("BankAccountInfo with id %s was saved.", bankAccountInfo.getUuid().toString()));
+            log.info("BankAccountInfo with id {} was saved.", bankAccountInfo.getUuid().toString());
         }
     }
 
-    public BankAccountInfo getBankAccountInfoById(UUID uuid) {
-        log.info(String.format("BankAccountInfo with id %s was returned.", uuid.toString()));
-        return bankAccountInfoRepo.getById(uuid);
+    public BankAccountInfoDTO getBankAccountInfoById(UUID uuid) {
+        log.info("BankAccountInfo with id {} was returned.", uuid.toString());
+        return BankAccountInfoMapper.toBankAccountInfoDTO(bankAccountInfoRepo.getById(uuid));
     }
 
-    public List<BankAccountInfo> getBankAccountInfos() {
+    public List<BankAccountInfoDTO> getBankAccountInfos() {
         log.info("BankAccountInfos list was returned.");
-        return bankAccountInfoRepo.findAll();
+        return bankAccountInfoRepo.findAll()
+                .stream()
+                .map(BankAccountInfoMapper::toBankAccountInfoDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<BankAccountInfo> getBankAccountByType(String type) {
+    public List<BankAccountInfoDTO> getBankAccountByType(String type) {
         AccountType accountType = AccountType.valueOf(type.toUpperCase(Locale.ROOT));
-        log.info(String.format("BankAccountInfos with type of %s were returned."), accountType.getTitle());
-        return bankAccountInfoRepo.getAccountsByType(accountType);
+        log.info("BankAccountInfos with type of {} were returned.", accountType.getTitle());
+        return bankAccountInfoRepo.getAccountsByType(accountType)
+                .stream()
+                .map(BankAccountInfoMapper::toBankAccountInfoDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<BankAccountInfo> getByPeriod(String startDate, String endDate) {
+    public List<BankAccountInfoDTO> getByPeriod(String startDate, String endDate) {
         Date startingDate = DateConverter.stringDayMonthYearToDate(startDate);
         Date endingDate = DateConverter.stringDayMonthYearToDate(endDate);
-        log.info(String.format("BankAccountInfos created in period between %s and %s were returned."), startingDate, endingDate);
-        return bankAccountInfoRepo.getByPeriod(startingDate, endingDate);
+        log.info("BankAccountInfos created in period between {} and {} were returned.", startingDate, endingDate);
+        return bankAccountInfoRepo.getByPeriod(startingDate, endingDate)
+                .stream()
+                .map(BankAccountInfoMapper::toBankAccountInfoDTO)
+                .collect(Collectors.toList());
     }
 }

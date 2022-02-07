@@ -10,14 +10,13 @@ import java.util.UUID;
 public class BankAccountMapper {
 
     public BankAccount toBankAccount(BankAccountDTO bankAccountDTO) {
-        BankAccount bankAccount = new BankAccount();
-        bankAccount.setUuid(UUID.randomUUID());
-        bankAccount.setAccountNumber(bankAccountDTO.getAccountNumber().get());
-        bankAccount.setFirstName(bankAccountDTO.getFirstName().get());
-        bankAccount.setMiddleName(bankAccountDTO.getMiddleName().get());
-        bankAccount.setLastName(bankAccountDTO.getLastName().get());
-        bankAccount.setSex(bankAccountDTO.getSex().get());
-
-        return bankAccount;
+        return BankAccount.builder()
+                .uuid(UUID.randomUUID())
+                .accountNumber(bankAccountDTO.getAccountNumber())
+                .firstName(bankAccountDTO.getFirstName())
+                .middleName(bankAccountDTO.getMiddleName())
+                .lastName(bankAccountDTO.getLastName())
+                .sex(bankAccountDTO.getSex())
+                .build();
     }
 }
